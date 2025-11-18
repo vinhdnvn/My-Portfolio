@@ -1,7 +1,7 @@
 import React from 'react';
 import { cn } from '@/lib/utils/string';
 import { LoadingProps } from '@/lib/types/ui';
-import { Loader2, MoreHorizontal, Ellipsis } from 'lucide-react';
+import { Loader2, Ellipsis } from 'lucide-react';
 
 const Loading = React.forwardRef<HTMLDivElement, LoadingProps>(
   (
@@ -15,7 +15,7 @@ const Loading = React.forwardRef<HTMLDivElement, LoadingProps>(
       testId,
       ...props
     },
-    ref
+    ref,
   ) => {
     const sizeClasses = {
       sm: 'h-4 w-4',
@@ -25,13 +25,10 @@ const Loading = React.forwardRef<HTMLDivElement, LoadingProps>(
 
     const containerClasses = cn(
       'flex flex-col items-center justify-center',
-      className
+      className,
     );
 
-    const iconClasses = cn(
-      'animate-spin text-blue-600',
-      sizeClasses[size]
-    );
+    const iconClasses = cn('animate-spin text-blue-600', sizeClasses[size]);
 
     const textClasses = {
       sm: 'text-sm',
@@ -47,7 +44,12 @@ const Loading = React.forwardRef<HTMLDivElement, LoadingProps>(
           return <Ellipsis className={iconClasses} />;
         case 'pulse':
           return (
-            <div className={cn(sizeClasses[size], 'bg-blue-600 rounded-full animate-pulse')} />
+            <div
+              className={cn(
+                sizeClasses[size],
+                'bg-blue-600 rounded-full animate-pulse',
+              )}
+            />
           );
         case 'skeleton':
           return (
@@ -72,18 +74,12 @@ const Loading = React.forwardRef<HTMLDivElement, LoadingProps>(
       >
         {renderIcon()}
         {text && (
-          <p className={cn('mt-2 text-gray-600', textClasses[size])}>
-            {text}
-          </p>
+          <p className={cn('mt-2 text-gray-600', textClasses[size])}>{text}</p>
         )}
-        {children && (
-          <div className="mt-2">
-            {children}
-          </div>
-        )}
+        {children && <div className="mt-2">{children}</div>}
       </div>
     );
-  }
+  },
 );
 
 Loading.displayName = 'Loading';

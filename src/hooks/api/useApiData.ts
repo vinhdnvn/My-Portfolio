@@ -1,4 +1,9 @@
-import { useQuery, useMutation, useQueryClient, UseQueryOptions, UseMutationOptions } from '@tanstack/react-query';
+import {
+  useQuery,
+  useMutation,
+  UseQueryOptions,
+  UseMutationOptions,
+} from '@tanstack/react-query';
 import { ApiResponse, ApiError } from '@/lib/types/api';
 import { apiClient } from '@/lib/utils/api';
 
@@ -13,14 +18,18 @@ export function useApiData<T = unknown>(
     cacheTime?: number;
     refetchOnWindowFocus?: boolean;
     refetchOnReconnect?: boolean;
-  }
+  },
 ) {
   const queryKey = Array.isArray(key) ? key : [key];
 
   return useQuery<ApiResponse<T>>({
     queryKey,
     queryFn: async () => {
-      return apiClient.get<T>(url, {}, { enabled: true, ttl: options?.staleTime });
+      return apiClient.get<T>(
+        url,
+        {},
+        { enabled: true, ttl: options?.staleTime },
+      );
     },
     enabled: options?.enabled ?? true,
     retry: options?.retry ?? 3,
@@ -39,10 +48,8 @@ export function useCreateApiData<T = unknown>(
     onSuccess?: (data: T) => void;
     onError?: (error: ApiError) => void;
     onSettled?: () => void;
-  }
+  },
 ) {
-  const queryClient = useQueryClient();
-
   return useMutation<ApiResponse<T>, ApiError, unknown>({
     mutationFn: async (data: unknown) => {
       return apiClient.post<T>(url, data);
@@ -65,15 +72,21 @@ export function useCreateApiData<T = unknown>(
 // Generic hook for updating data with React Query
 export function useUpdateApiData<T = unknown>(
   url: string,
-  options?: UseMutationOptions<ApiResponse<T>, ApiError, { id: string; data: Partial<T> }> & {
+  options?: UseMutationOptions<
+    ApiResponse<T>,
+    ApiError,
+    { id: string; data: Partial<T> }
+  > & {
     onSuccess?: (data: T) => void;
     onError?: (error: ApiError) => void;
     onSettled?: () => void;
-  }
+  },
 ) {
-  const queryClient = useQueryClient();
-
-  return useMutation<ApiResponse<T>, ApiError, { id: string; data: Partial<T> }>({
+  return useMutation<
+    ApiResponse<T>,
+    ApiError,
+    { id: string; data: Partial<T> }
+  >({
     mutationFn: async ({ id, data }) => {
       return apiClient.put<T>(`${url}/${id}`, data);
     },
@@ -99,10 +112,8 @@ export function useDeleteApiData<T = unknown>(
     onSuccess?: (data: T) => void;
     onError?: (error: ApiError) => void;
     onSettled?: () => void;
-  }
+  },
 ) {
-  const queryClient = useQueryClient();
-
   return useMutation<ApiResponse<T>, ApiError, string>({
     mutationFn: async (id: string) => {
       return apiClient.delete<T>(`${url}/${id}`);
@@ -126,23 +137,37 @@ export function useDeleteApiData<T = unknown>(
 export function usePaginatedApiData<T = unknown>(
   key: string | string[],
   url: string,
-  options?: Omit<UseQueryOptions<ApiResponse<{ items: T[]; pagination: Record<string, unknown> }>>, 'queryKey'> & {
+  options?: Omit<
+    UseQueryOptions<
+      ApiResponse<{ items: T[]; pagination: Record<string, unknown> }>
+    >,
+    'queryKey'
+  > & {
     enabled?: boolean;
     page?: number;
     limit?: number;
     retry?: number;
     staleTime?: number;
-  }
+  },
 ) {
   const queryKey = Array.isArray(key) ? key : [key];
   const page = options?.page ?? 1;
   const limit = options?.limit ?? 10;
 
-  return useQuery<ApiResponse<{ items: T[]; pagination: Record<string, unknown> }>>({
+  return useQuery<
+    ApiResponse<{ items: T[]; pagination: Record<string, unknown> }>
+  >({
     queryKey: [...queryKey, page, limit],
     queryFn: async () => {
-      const searchParams = new URLSearchParams({ page: page.toString(), limit: limit.toString() });
-      return apiClient.get<{ items: T[]; pagination: Record<string, unknown> }>(`${url}?${searchParams}`, {}, { enabled: true, ttl: options?.staleTime });
+      const searchParams = new URLSearchParams({
+        page: page.toString(),
+        limit: limit.toString(),
+      });
+      return apiClient.get<{ items: T[]; pagination: Record<string, unknown> }>(
+        `${url}?${searchParams}`,
+        {},
+        { enabled: true, ttl: options?.staleTime },
+      );
     },
     enabled: options?.enabled ?? true,
     retry: options?.retry ?? 3,
@@ -155,12 +180,15 @@ export function usePaginatedApiData<T = unknown>(
 export function useInfiniteApiData<T = unknown>(
   key: string | string[],
   url: string,
-  options?: Omit<UseQueryOptions<ApiResponse<{ items: T[]; nextCursor?: string }>>, 'queryKey'> & {
+  options?: Omit<
+    UseQueryOptions<ApiResponse<{ items: T[]; nextCursor?: string }>>,
+    'queryKey'
+  > & {
     enabled?: boolean;
     limit?: number;
     retry?: number;
     staleTime?: number;
-  }
+  },
 ) {
   const queryKey = Array.isArray(key) ? key : [key];
   const limit = options?.limit ?? 10;
@@ -169,7 +197,11 @@ export function useInfiniteApiData<T = unknown>(
     queryKey: queryKey,
     queryFn: async () => {
       const searchParams = new URLSearchParams({ limit: limit.toString() });
-      return apiClient.get<{ items: T[]; nextCursor?: string }>(`${url}?${searchParams}`, {}, { enabled: true, ttl: options?.staleTime });
+      return apiClient.get<{ items: T[]; nextCursor?: string }>(
+        `${url}?${searchParams}`,
+        {},
+        { enabled: true, ttl: options?.staleTime },
+      );
     },
     enabled: options?.enabled ?? true,
     retry: options?.retry ?? 3,
@@ -187,14 +219,18 @@ export function useRealTimeApiData<T = unknown>(
     retry?: number;
     staleTime?: number;
     refetchInterval?: number; // in milliseconds
-  }
+  },
 ) {
   const queryKey = Array.isArray(key) ? key : [key];
 
   return useQuery<ApiResponse<T>>({
     queryKey,
     queryFn: async () => {
-      return apiClient.get<T>(url, {}, { enabled: true, ttl: options?.staleTime });
+      return apiClient.get<T>(
+        url,
+        {},
+        { enabled: true, ttl: options?.staleTime },
+      );
     },
     enabled: options?.enabled ?? true,
     retry: options?.retry ?? 3,

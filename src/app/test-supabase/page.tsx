@@ -6,7 +6,7 @@ import type { Project } from '@/lib/db/models/projects';
 import type { Experience } from '@/lib/db/models/experiences';
 import type { Achievement } from '@/lib/db/models/achievements';
 import type { Post } from '@/lib/db/models/posts';
-import type { SiteSetting } from '@/lib/db/models/siteSettings';
+import type { SiteSettings } from '@/lib/db/models/siteSettings';
 
 interface TestData {
   profiles: Profile[];
@@ -14,7 +14,7 @@ interface TestData {
   experiences: Experience[];
   achievements: Achievement[];
   posts: Post[];
-  siteSettings: SiteSetting[];
+  siteSettings: SiteSettings[];
 }
 
 export default function TestSupabasePage() {
@@ -56,13 +56,14 @@ export default function TestSupabasePage() {
           experiences: experiencesRes.data as Experience[],
           achievements: achievementsRes.data as Achievement[],
           posts: postsRes.data as Post[],
-          siteSettings: siteSettingsRes.data as SiteSetting[],
+          siteSettings: siteSettingsRes.data as SiteSettings[],
         };
 
         setData(testData);
         setStatus('✅ Supabase connected successfully!');
       } catch (err: unknown) {
-        const errorMessage = err instanceof Error ? err.message : 'Unknown error';
+        const errorMessage =
+          err instanceof Error ? err.message : 'Unknown error';
         console.error(err);
         setError(errorMessage);
         setStatus('❌ Connection failed');
@@ -141,9 +142,7 @@ export default function TestSupabasePage() {
         </div>
       )}
 
-      {!data && !error && (
-        <div className="text-gray-500">Loading data...</div>
-      )}
+      {!data && !error && <div className="text-gray-500">Loading data...</div>}
     </div>
   );
 }

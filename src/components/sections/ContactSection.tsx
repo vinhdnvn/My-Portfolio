@@ -4,14 +4,7 @@ import { cn } from '@/lib/utils/string';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { BaseComponentProps } from '@/lib/types/ui';
-import { 
-  Send, 
-  Github, 
-  Linkedin, 
-  FileText, 
-  Mail, 
-  Calendar, 
-} from 'lucide-react';
+import { Send, Github, Linkedin, FileText, Mail, Calendar } from 'lucide-react';
 
 export interface ContactForm {
   name: string;
@@ -49,49 +42,51 @@ const ContactSection = React.forwardRef<HTMLElement, ContactSectionProps>(
       onSubmit,
       directLinks = [
         {
-          id: "1",
-          label: "GitHub",
-          url: "#",
+          id: '1',
+          label: 'GitHub',
+          url: '#',
           icon: <Github className="w-4 h-4 text-slate-200" />,
-          badge: "@johndoe-dev"
+          badge: '@johndoe-dev',
         },
         {
-          id: "2",
-          label: "LinkedIn",
-          url: "#",
+          id: '2',
+          label: 'LinkedIn',
+          url: '#',
           icon: <Linkedin className="w-4 h-4 text-slate-200" />,
-          badge: "john-doe"
+          badge: 'john-doe',
         },
         {
-          id: "3",
-          label: "Download résumé",
-          url: "#",
+          id: '3',
+          label: 'Download résumé',
+          url: '#',
           icon: <FileText className="w-4 h-4 text-slate-200" />,
-          badge: "PDF · 1 page"
-        }
+          badge: 'PDF · 1 page',
+        },
       ],
       availability = {
-        availability: "April 2025",
-        description: "Open to full-time roles (remote or Berlin) and select consulting engagements.",
-        idealFit: "Ideal fit: product-driven teams shipping modern web apps with TypeScript, React, and clear ownership."
+        availability: 'April 2025',
+        description:
+          'Open to full-time roles (remote or Berlin) and select consulting engagements.',
+        idealFit:
+          'Ideal fit: product-driven teams shipping modern web apps with TypeScript, React, and clear ownership.',
       },
-      email = "john.doe@example.com",
+      email = 'john.doe@example.com',
       id,
       testId,
       ...props
     },
-    ref
+    ref,
   ) => {
     const [formData, setFormData] = useState<ContactForm>({
       name: '',
       email: '',
       company: '',
       role: '',
-      message: ''
+      message: '',
     });
 
     const handleInputChange = (field: keyof ContactForm) => (value: string) => {
-      setFormData(prev => ({ ...prev, [field]: value }));
+      setFormData((prev) => ({ ...prev, [field]: value }));
     };
 
     const handleSubmit = (e: React.FormEvent) => {
@@ -105,7 +100,7 @@ const ContactSection = React.forwardRef<HTMLElement, ContactSectionProps>(
       <section
         ref={ref}
         id={id}
-        className={cn("border-t border-white/5 bg-[#050816]", className)}
+        className={cn('border-t border-white/5 bg-[#050816]', className)}
         data-testid={testId}
         {...props}
       >
@@ -114,7 +109,12 @@ const ContactSection = React.forwardRef<HTMLElement, ContactSectionProps>(
           <div className="rounded-2xl border border-white/10 bg-[#050816] p-5 sm:p-6">
             <div className="flex items-center justify-between mb-5">
               <div>
-                <p className="text-sm text-slate-400 mt-1">Share a few details and II&apos;ll respondapos;ll respond within 24–48 hours.</p>
+                <h2 className="text-xl font-semibold tracking-tight text-slate-50">
+                  Let&apos;s build something
+                </h2>
+                <p className="text-sm text-slate-400 mt-1">
+                  Share a few details and I&apos;ll respond within 24–48 hours.
+                </p>
               </div>
               <Send className="w-5 h-5 text-indigo-300" />
             </div>
@@ -154,7 +154,10 @@ const ContactSection = React.forwardRef<HTMLElement, ContactSectionProps>(
               </div>
 
               <div>
-                <label htmlFor="message" className="block text-[11px] text-slate-300 mb-1.5">
+                <label
+                  htmlFor="message"
+                  className="block text-[11px] text-slate-300 mb-1.5"
+                >
                   How can I help?
                 </label>
                 <textarea
@@ -197,7 +200,9 @@ const ContactSection = React.forwardRef<HTMLElement, ContactSectionProps>(
           {/* Direct links & Availability */}
           <aside className="space-y-4">
             <div className="rounded-2xl border border-white/10 bg-[#050816] p-5">
-              <h3 className="text-sm font-medium text-slate-100 tracking-tight mb-3">Direct links</h3>
+              <h3 className="text-sm font-medium text-slate-100 tracking-tight mb-3">
+                Direct links
+              </h3>
               <div className="space-y-2 text-xs">
                 {directLinks.map((link) => (
                   <a
@@ -209,7 +214,9 @@ const ContactSection = React.forwardRef<HTMLElement, ContactSectionProps>(
                       {link.icon}
                       <span className="text-slate-100">{link.label}</span>
                     </div>
-                    <span className="text-[11px] text-slate-400">{link.badge}</span>
+                    <span className="text-[11px] text-slate-400">
+                      {link.badge}
+                    </span>
                   </a>
                 ))}
               </div>
@@ -219,9 +226,13 @@ const ContactSection = React.forwardRef<HTMLElement, ContactSectionProps>(
               <div className="flex items-center justify-between mb-2">
                 <div className="inline-flex items-center gap-1.5 text-indigo-100">
                   <Calendar className="w-4 h-4" />
-                  <span className="text-[11px] uppercase tracking-[0.16em]">Availability</span>
+                  <span className="text-[11px] uppercase tracking-[0.16em]">
+                    Availability
+                  </span>
                 </div>
-                <span className="text-[11px] text-indigo-100">{availability.availability}</span>
+                <span className="text-[11px] text-indigo-100">
+                  {availability.availability}
+                </span>
               </div>
               <p className="text-slate-50 mb-2">{availability.description}</p>
               <p className="text-slate-100/80">{availability.idealFit}</p>
@@ -230,7 +241,7 @@ const ContactSection = React.forwardRef<HTMLElement, ContactSectionProps>(
         </div>
       </section>
     );
-  }
+  },
 );
 
 ContactSection.displayName = 'ContactSection';
