@@ -1,15 +1,27 @@
-export interface Project {
-  id: string;
+// Re-export from the central types
+export type {
+  Project,
+  NewProject,
+  UpdateProject,
+  ProjectWithDetails,
+} from '@/lib/types/database';
+
+// Additional project-specific types
+export interface ProjectFormData {
   title: string;
-  description: string | null;
-  thumbnailUrl: string | null;
-  githubUrl: string | null;
-  liveUrl: string | null;
-  confidential: boolean | null;
-  techStack: string[] | null;
-  createdAt: Date | null;
-  updatedAt: Date | null;
+  description?: string;
+  thumbnailUrl?: string;
+  githubUrl?: string;
+  liveUrl?: string;
+  confidential?: boolean;
+  techStack?: string[];
 }
 
-export type NewProject = Omit<Project, 'id' | 'createdAt' | 'updatedAt'>;
-export type UpdateProject = Partial<NewProject>;
+export interface ProjectValidationErrors {
+  title?: string;
+  description?: string;
+  thumbnailUrl?: string;
+  githubUrl?: string;
+  liveUrl?: string;
+  techStack?: string;
+}

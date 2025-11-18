@@ -1,14 +1,25 @@
-export interface Post {
-  id: string;
+// Re-export from the central types
+export type {
+  Post,
+  NewPost,
+  UpdatePost,
+  PostWithDetails,
+} from '@/lib/types/database';
+
+// Additional post-specific types
+export interface PostFormData {
   title: string;
-  slug: string | null;
-  context: string | null;
-  coverUrl: string | null;
-  attachments: string[] | null;
-  published: boolean | null;
-  createdAt: Date | null;
-  updatedAt: Date | null;
+  slug?: string;
+  context?: string;
+  coverUrl?: string;
+  attachments?: string[];
+  published?: boolean;
 }
 
-export type NewPost = Omit<Post, 'id' | 'createdAt' | 'updatedAt'>;
-export type UpdatePost = Partial<NewPost>;
+export interface PostValidationErrors {
+  title?: string;
+  slug?: string;
+  context?: string;
+  coverUrl?: string;
+  attachments?: string;
+}

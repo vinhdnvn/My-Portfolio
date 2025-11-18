@@ -1,15 +1,27 @@
-export interface SiteSetting {
-  id: string;
-  siteName: string | null;
-  tagline: string | null;
-  about: string | null;
-  contactEmail: string | null;
-  githubUrl: string | null;
-  linkedinUrl: string | null;
-  paperUrl: string | null;
-  createdAt: Date;
-  updatedAt: Date | null;
+// Re-export from the central types
+export type {
+  SiteSettings,
+  NewSiteSettings,
+  UpdateSiteSettings,
+} from '@/lib/types/database';
+
+// Additional site settings-specific types
+export interface SiteSettingsFormData {
+  siteName?: string;
+  tagline?: string;
+  about?: string;
+  contactEmail?: string;
+  githubUrl?: string;
+  linkedinUrl?: string;
+  paperUrl?: string;
 }
 
-export type NewSiteSetting = Omit<SiteSetting, 'id' | 'createdAt' | 'updatedAt'>;
-export type UpdateSiteSetting = Partial<NewSiteSetting>;
+export interface SiteSettingsValidationErrors {
+  siteName?: string;
+  tagline?: string;
+  about?: string;
+  contactEmail?: string;
+  githubUrl?: string;
+  linkedinUrl?: string;
+  paperUrl?: string;
+}

@@ -1,13 +1,25 @@
-export interface Achievement {
-  id: string;
+// Re-export from the central types
+export type {
+  Achievement,
+  NewAchievement,
+  UpdateAchievement,
+} from '@/lib/types/database';
+
+// Additional achievement-specific types
+export interface AchievementFormData {
   title: string;
-  organization: string | null;
-  date: string | null;
-  description: string | null;
-  certificateUrl: string | null;
-  attachmentUrl: string | null;
-  createdAt: Date;
+  organization?: string;
+  date?: string;
+  description?: string;
+  certificateUrl?: string;
+  attachmentUrl?: string;
 }
 
-export type NewAchievement = Omit<Achievement, 'id' | 'createdAt'>;
-export type UpdateAchievement = Partial<NewAchievement>;
+export interface AchievementValidationErrors {
+  title?: string;
+  organization?: string;
+  date?: string;
+  description?: string;
+  certificateUrl?: string;
+  attachmentUrl?: string;
+}
