@@ -6,6 +6,12 @@ const nextConfig: NextConfig = {
   experimental: {
     globalNotFound: true,
   },
+  images:{
+     domains: [
+      "hoirqrkdgbmvpwutwuwj.supabase.co",
+      "images.unsplash.com"
+    ],
+  }
 };
 
 export default nextConfig;
