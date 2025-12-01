@@ -16,7 +16,7 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
       testId,
       ...props
     },
-    ref
+    ref,
   ) => {
     const baseClasses = [
       'bg-white rounded-lg shadow-sm border border-gray-200',
@@ -49,10 +49,10 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
       paddingClasses[padding],
       hoverClasses,
       clickableClasses,
-      className
+      className,
     );
 
-    const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    const handleClick = () => {
       if (onClick) {
         onClick();
       }
@@ -70,7 +70,7 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
         {children}
       </div>
     );
-  }
+  },
 );
 
 Card.displayName = 'Card';

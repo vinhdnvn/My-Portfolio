@@ -1,0 +1,26 @@
+#!/usr/bin/env sh
+
+# Check for TypeScript errors
+echo "🔍 Checking for TypeScript errors..."
+npx tsc --noEmit
+
+# Check for ESLint errors
+echo "🔍 Running ESLint..."
+npx eslint . --max-warnings=0
+
+# Check for missing imports
+echo "🔍 Checking for missing imports..."
+npx tsc --noEmit --skipLibCheck
+
+# Check for any types (excluding valid use cases)
+echo "🔍 Checking for any types..."
+if grep -r ": any" --include="*.ts" --include="*.tsx" src/ | grep -v "//.*any" | grep -v "export.*any"; then
+  echo "❌ Found any types. Please replace with proper types."
+  exit 1
+fi
+
+# Run lint-staged
+echo "🔍 Running lint-staged..."
+npx lint-staged
+
+echo "✅ All checks passed!"

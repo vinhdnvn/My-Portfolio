@@ -23,11 +23,11 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       testId,
       ...props
     },
-    ref
+    ref,
   ) => {
     const inputId = React.useId();
     const finalId = id || `input-${inputId}`;
-    
+
     const baseClasses = [
       'flex w-full rounded-md border border-gray-300 px-3 py-2 text-sm placeholder-gray-400',
       'focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500',
@@ -38,11 +38,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       ? 'border-red-300 focus:ring-red-500 focus:border-red-500'
       : '';
 
-    const inputClasses = cn(
-      ...baseClasses,
-      errorClasses,
-      className
-    );
+    const inputClasses = cn(...baseClasses, errorClasses, className);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       if (onChange) {
@@ -50,13 +46,13 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       }
     };
 
-    const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    const handleBlur = () => {
       if (onBlur) {
         onBlur();
       }
     };
 
-    const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
+    const handleFocus = () => {
       if (onFocus) {
         onFocus();
       }
@@ -73,7 +69,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             {required && <span className="text-red-500 ml-1">*</span>}
           </label>
         )}
-        
+
         <div className="relative">
           <input
             ref={ref}
@@ -91,7 +87,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             data-testid={testId}
             {...props}
           />
-          
+
           {children && (
             <div className="absolute inset-y-0 right-0 flex items-center pr-3">
               {children}
@@ -101,9 +97,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
 
         {(error || helperText) && (
           <div className="mt-1">
-            {error && (
-              <p className="text-sm text-red-600">{error}</p>
-            )}
+            {error && <p className="text-sm text-red-600">{error}</p>}
             {helperText && !error && (
               <p className="text-sm text-gray-500">{helperText}</p>
             )}
@@ -111,7 +105,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         )}
       </div>
     );
-  }
+  },
 );
 
 Input.displayName = 'Input';

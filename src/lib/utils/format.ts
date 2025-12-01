@@ -3,15 +3,11 @@ import type { DateString } from '@/lib/types/common';
 /**
  * Format a date to display format
  * @param date - Date to format
- * @param format - Format string (default: 'MMM d, yyyy')
  * @returns Formatted date string
  */
-export function formatDate(
-  date: Date | DateString,
-  format: string = 'MMM d, yyyy'
-): string {
+export function formatDate(date: Date | DateString): string {
   const dateObj = typeof date === 'string' ? new Date(date) : date;
-  
+
   if (isNaN(dateObj.getTime())) {
     return '';
   }
@@ -30,7 +26,7 @@ export function formatDate(
  */
 export function formatRelativeTime(date: Date | DateString): string {
   const dateObj = typeof date === 'string' ? new Date(date) : date;
-  
+
   if (isNaN(dateObj.getTime())) {
     return '';
   }
@@ -75,7 +71,7 @@ export function formatNumber(num: number): string {
  */
 export function formatCurrency(
   amount: number,
-  currency: string = 'USD'
+  currency: string = 'USD',
 ): string {
   return new Intl.NumberFormat('en-US', {
     style: 'currency',
@@ -89,10 +85,7 @@ export function formatCurrency(
  * @param decimals - Number of decimal places (default: 1)
  * @returns Formatted percentage string
  */
-export function formatPercentage(
-  value: number,
-  decimals: number = 1
-): string {
+export function formatPercentage(value: number, decimals: number = 1): string {
   return `${(value * 100).toFixed(decimals)}%`;
 }
 
@@ -121,7 +114,7 @@ export function formatFileSize(bytes: number): string {
 export function formatPhone(phone: string): string {
   // Remove all non-numeric characters
   const cleaned = phone.replace(/\D/g, '');
-  
+
   // Check if it's a valid phone number
   if (cleaned.length !== 10) {
     return phone; // Return original if invalid
@@ -164,13 +157,16 @@ export function capitalizeWords(text: string): string {
  */
 export function formatList(
   items: string[],
-  conjunction: string = 'and'
+  conjunction: string = 'and',
 ): string {
   if (items.length === 0) return '';
   if (items.length === 1) return items[0];
   if (items.length === 2) return items.join(` ${conjunction} `);
 
-  return items.slice(0, -1).join(', ') + `, ${conjunction} ${items[items.length - 1]}`;
+  return (
+    items.slice(0, -1).join(', ') +
+    `, ${conjunction} ${items[items.length - 1]}`
+  );
 }
 
 /**
@@ -251,7 +247,7 @@ export function formatDuration(ms: number): string {
  */
 export function formatSocialHandle(
   platform: 'github' | 'twitter' | 'linkedin' | 'instagram',
-  handle: string
+  handle: string,
 ): string {
   const baseUrl = {
     github: 'https://github.com',
